@@ -86,7 +86,7 @@ Rectangle
                 Layout.maximumWidth: 50+150*root.incolum
                 Layout.maximumHeight:  50
                 text:qsTr("Send")
-                enabled:(Node_Conection.state&&DropCreator.state&&(DropCreator.funds.largeValue.value>0))
+                enabled:(Node_Conection.state&&DropCreator.state&&DropCreator.model.countNotSent)
                 onClicked:
                 {
                     DropCreator.create();

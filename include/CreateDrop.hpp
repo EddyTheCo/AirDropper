@@ -69,6 +69,7 @@ class BoxModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)
+    Q_PROPERTY(int countNotSent MEMBER m_countNotSent NOTIFY countNotSentChanged)
     Q_PROPERTY(QJsonObject  amountJson READ getAmountJson  NOTIFY amountJsonChanged)
     QML_ELEMENT
 
@@ -107,13 +108,14 @@ public:
 
 signals:
     void countChanged(int count);
+    void countNotSentChanged();
     void amountChanged();
     void amountJsonChanged();
 
 private:
     void getTotal(void);
     void checkAmount(void);
-    int m_count;
+    int m_count,m_countNotSent;
     QList<DropBox*> boxes;
     quint64  amount;
     QJsonObject m_amount_json;
