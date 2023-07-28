@@ -22,16 +22,16 @@ DropBox::DropBox(QObject *parent):QObject(parent),m_validAddr(false),m_sent(fals
 
 }
 DropBox::DropBox(const QJsonValue &prop, QObject *parent):QObject(parent),m_validAddr(false),m_sent(false),out(nullptr),
-    m_alias((prop["alias"].isNull())?"":prop["alias"].toString()),
-    m_address((prop["address"].isNull())?"":prop["address"].toString()),
-    m_amount((prop["amount"].isNull())?1:prop["amount"].toInteger())
+    m_alias((prop["alias"].isUndefined())?"":prop["alias"].toString()),
+    m_address((prop["address"].isUndefined())?"":prop["address"].toString()),
+    m_amount((prop["amount"].isUndefined())?1:prop["amount"].toInteger())
 
 {
     checkAddress();
     connect(this,&DropBox::addressChanged,this,&DropBox::checkAddress);
     connect(this,&DropBox::amountChanged,this,&DropBox::fillout);
     connect(this,&DropBox::metdataChanged,this,&DropBox::fillout);
-    if(!prop["message"].isNull())setMetdata(prop["message"].toString());
+    if(!prop["message"].isUndefined())setMetdata(prop["message"].toString());
 }
 void DropBox::fillout()
 {
@@ -127,7 +127,7 @@ void DropBox::setMetdata(QString data_m)
     }
 
 };
-BoxModel::BoxModel(QObject *parent):QAbstractListModel(parent),amount(0)
+BoxModel::BoxModel(QObject *parent):QAbstractListModel(parent),amount(0),m_count(0),m_countNotSent(0)
 {
     connect(this,&BoxModel::amountChanged,this,&BoxModel::checkAmount);
 }
@@ -140,6 +140,7 @@ void BoxModel::checkAmount()
         info->deleteLater();
     });
 }
+
 int BoxModel::count() const
 {
     return boxes.size();
@@ -197,7 +198,6 @@ QModelIndex BoxModel::index(int row, int column , const QModelIndex &parent ) co
 void BoxModel::addBox(DropBox* o)
 {
     connect(o,&DropBox::amountChanged,this,&BoxModel::getTotal);
-
     int i = boxes.size();
 
     beginInsertRows(QModelIndex(), i, i);
@@ -213,6 +213,15 @@ void BoxModel::addBox(DropBox* o)
         emit dataChanged(ind,ind,QList<int>{roleNames().key("depositJson")});
     });
     connect(o,&DropBox::validAddrChanged,this,[=](){
+        if(o->isValidAddr())
+        {
+            m_countNotSent++;
+        }
+        else
+        {
+            m_countNotSent--;
+        }
+        emit countNotSentChanged();
         emit dataChanged(ind,ind,QList<int>{roleNames().key("validAddr")});
     });
 }
@@ -222,6 +231,11 @@ void BoxModel::getTotal()
     for(const auto& v:boxes)amount+=v->m_amount;
 }
 void BoxModel::rmBox(int i) {
+    if(!boxes[i]->isSent()&&boxes[i]->isValidAddr())
+    {
+        m_countNotSent--;
+        emit countNotSentChanged();
+    }
     amount-=boxes[i]->m_amount;
     beginRemoveRows(QModelIndex(),i,i);
     boxes[i]->deleteLater();
@@ -283,7 +297,13 @@ void BoxModel::setSent()
 {
     for(auto i=0;i<boxes.size();i++)
     {
-        setProperty(i,"sent",true);
+
+        if(!boxes[i]->isSent()&&boxes[i]->isValidAddr())
+        {
+            setProperty(i,"sent",true);
+            m_countNotSent--;
+            emit countNotSentChanged();
+        }
     }
 }
 
