@@ -15,7 +15,7 @@ One could also save the produced seed just in case.
 
 ### CORS header 'Access-Control-Allow-Origin' missing
 
-When using the browser application, the API request could be denied with the return 'Reason: CORS header 'Access-Control-Allow-Origin' missing'.
+When using the browser application and your node, the API request could be denied with the return 'Reason: CORS header 'Access-Control-Allow-Origin' missing'.
 In that case, one needs to set the Access-Control-Allow-Origin header's value as explained [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSMissingAllowOrigin).
 
 If you use the docker setup of Hornet just add 
