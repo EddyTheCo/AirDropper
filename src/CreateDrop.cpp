@@ -8,13 +8,6 @@ using namespace qblocks;
 DropBox::DropBox(QObject *parent):QObject(parent),m_validAddr(false),m_sent(false),out(nullptr),m_amount(1)
 
 {
-    /*m_amount_json({{"default",1},
-                  {"largeValue",QJsonObject({{"value",1},{"unit","glow"}})},
-                  {"shortValue",QJsonObject({{"value",0.000001},{"unit","rms"}})}}),
-    m_deposit_json({{"default",1},
-                  {"largeValue",QJsonObject({{"value",0},{"unit","glow"}})},
-                  {"shortValue",QJsonObject({{"value",0.000},{"unit","rms"}})}})*/
-
     fillout();
     connect(this,&DropBox::addressChanged,this,&DropBox::checkAddress);
     connect(this,&DropBox::amountChanged,this,&DropBox::fillout);
