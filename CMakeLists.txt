@@ -34,7 +34,7 @@ qt_add_executable(airdropper main.cpp)
 FetchContent_Declare(
 	MyDesigns
 	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-	GIT_TAG v0.2.1
+	GIT_TAG v0.2.2
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(MyDesigns)
