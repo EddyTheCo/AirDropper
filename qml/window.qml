@@ -6,7 +6,7 @@ import account
 import AirDropper
 import MyDesigns
 import nodeConection
-
+import midlePay
 ApplicationWindow {
     visible: true
     id:window
@@ -63,6 +63,13 @@ ApplicationWindow {
             }
             DropCreator.restart();
         }
+    }
+    MidlePayPop
+    {
+        initTag:"Airdropper"
+        width:300
+        height:350
+        anchors.centerIn: Overlay.overlay
     }
 
     GridLayout

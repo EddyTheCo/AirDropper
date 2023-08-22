@@ -32,23 +32,30 @@ qt_standard_project_setup()
 
 qt_add_executable(airdropper main.cpp)
 FetchContent_Declare(
-	MyDesigns
-	GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
-	GIT_TAG v0.2.2
+        midlePay
+        GIT_REPOSITORY https://github.com/EddyTheCo/MidlePay.git
+        GIT_TAG v0.0.2
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
+FetchContent_MakeAvailable(midlePay)
+FetchContent_Declare(
+        MyDesigns
+        GIT_REPOSITORY https://github.com/EddyTheCo/MyDesigns.git
+        GIT_TAG v0.2.2
+        FIND_PACKAGE_ARGS 0 CONFIG
+        )
 FetchContent_MakeAvailable(MyDesigns)
 FetchContent_Declare(
 	account
 	GIT_REPOSITORY https://github.com/EddyTheCo/account.git
-	GIT_TAG v0.1.2
+        GIT_TAG v0.2.1
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(account)
 FetchContent_Declare(
 	nodeConection
 	GIT_REPOSITORY https://github.com/EddyTheCo/ConectionSettings.git
-	GIT_TAG v0.1.4
+        GIT_TAG v0.2.1
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(nodeConection)
@@ -99,7 +106,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(qrCode)
 
 
-target_link_libraries(airdropper PRIVATE MyDesigns account nodeConection QtQrGen outMonitor)
+target_link_libraries(airdropper PRIVATE MyDesigns account nodeConection QtQrGen outMonitor midlePay)
 set_target_properties(airdropper PROPERTIES
 	WIN32_EXECUTABLE ON
 	MACOSX_BUNDLE ON
