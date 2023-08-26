@@ -34,7 +34,7 @@ qt_add_executable(airdropper main.cpp)
 FetchContent_Declare(
         midlePay
         GIT_REPOSITORY https://github.com/EddyTheCo/MidlePay.git
-        GIT_TAG v0.0.2
+        GIT_TAG v0.0.3
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(midlePay)
