@@ -22,7 +22,8 @@ jobs:
       os: ${{ matrix.os }}
       sharedLib: ${{ matrix.sharedLib }}
       useThread: ${{ matrix.useThread }}
-      qtModules: 'qtwebsockets qtshadertools' 
+      qtModules: 'qtwebsockets qtshadertools'
+      qtVersion: '6.6.0'  
       test: false
     secrets:
       NODE_JWT: ${{ secrets.NODE_JWT }}
