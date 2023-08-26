@@ -34,7 +34,7 @@ qt_add_executable(airdropper main.cpp)
 FetchContent_Declare(
         midlePay
         GIT_REPOSITORY https://github.com/EddyTheCo/MidlePay.git
-        GIT_TAG v0.0.2
+        GIT_TAG v0.0.3
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(midlePay)
@@ -55,7 +55,7 @@ FetchContent_MakeAvailable(account)
 FetchContent_Declare(
 	nodeConection
 	GIT_REPOSITORY https://github.com/EddyTheCo/ConectionSettings.git
-        GIT_TAG v0.2.1
+        GIT_TAG v0.2.2
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(nodeConection)
@@ -63,7 +63,7 @@ FetchContent_MakeAvailable(nodeConection)
 FetchContent_Declare(
 	outMonitor
 	GIT_REPOSITORY https://github.com/EddyTheCo/outMonitor.git
-	GIT_TAG v0.1.3
+	GIT_TAG v0.1.4
 	FIND_PACKAGE_ARGS 0 CONFIG
 	)
 FetchContent_MakeAvailable(outMonitor)
@@ -118,6 +118,11 @@ install(TARGETS airdropper
 	BUNDLE  DESTINATION .
 	DESTINATION ${CMAKE_INSTALL_BINDIR}
 	)
+qt_generate_deploy_qml_app_script(
+    TARGET airdropper
+    OUTPUT_SCRIPT deploy_script
+)
+install(SCRIPT ${deploy_script})
 if(EMSCRIPTEN)
 	add_custom_command(
 		TARGET airdropper
