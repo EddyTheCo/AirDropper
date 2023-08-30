@@ -13,6 +13,6 @@ jobs:
       id-token: write
     with:
       qtModules: 'qtwebsockets qtshadertools'
-      qtVersion: '6.6.0'
+      qtVersion: '6.5.0'
     secrets:
       NODE_JWT: ${{ secrets.NODE_JWT }}
